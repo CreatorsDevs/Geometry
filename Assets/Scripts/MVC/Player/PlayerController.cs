@@ -14,7 +14,7 @@ public class PlayerController
     private Transform m_transform;
 
     private PlayerModel PlayerModel { get; }
-    private PlayerView PlayerView { get; }
+    public PlayerView PlayerView { get; }
 
     public PlayerController(PlayerModel playerModel, PlayerView playerView)
     {
@@ -22,9 +22,10 @@ public class PlayerController
         PlayerView = GameObject.Instantiate<PlayerView>(playerView);
         PlayerView.SetPlayerController(this);
     }
+
     public void start()
     {
-                
+        
     }
 
     public void Initialize()
