@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModel : MonoBehaviour
+public class PlayerModel
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public PlayerType PlayerType { get; private set; }
+    public float MoveSpeed { get; private set; }
+    public float JumpHeight { get; private set; }
+    public float MoveDistance { get; private set; }
+    public float SmoothSwipeTime { get; private set; }
+    public float SmoothJumpTime { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    public PlayerModel(PlayerScriptableObject playerScriptableObject)
     {
-        
+        PlayerType = playerScriptableObject.playerType;
+        MoveSpeed = playerScriptableObject.moveSpeed;
+        JumpHeight = playerScriptableObject.jumpHeight;
+        MoveDistance = playerScriptableObject.moveDistance;
+        SmoothJumpTime = playerScriptableObject.smoothSwipeTime;
+        SmoothJumpTime = playerScriptableObject.smoothJumpTime;
     }
 }

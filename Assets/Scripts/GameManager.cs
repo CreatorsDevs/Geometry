@@ -9,8 +9,10 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         ServiceLocator.Register(this);
+    }
 
-        //AudioManager audioManager = ServiceLocator.Get<AudioManager>();
-        //audioManager.Play("Background Music");
+    private void Start()
+    {
+        
     }
 }

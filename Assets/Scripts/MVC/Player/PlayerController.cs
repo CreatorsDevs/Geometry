@@ -3,34 +3,38 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController
 {
-    [SerializeField] private float m_MoveSpeed = 10.0f;
-    [Tooltip("In Degrees")]
-    [SerializeField] private float m_AngleThresholdForY = 30;
-    private Vector2 m_TouchStartPos;
-    private Vector2 m_TouchEndPos;
+    private readonly float m_AngleThresholdForY = 30; // In Degrees
     private Vector3 m_PositionToMoveTo;
     private bool m_JumpAllowed = false;
     private bool m_CanMoveRight = false;
     private bool m_CanMoveLeft = false;
     private Rigidbody rb;
+    private Transform m_transform;
 
-    public float moveDistance = 2.0f;
-    public float jumpVelocity = 7.0f;
-    public float smoothTime = 0.2f;
+    private PlayerModel PlayerModel { get; }
+    private PlayerView PlayerView { get; }
 
-    private void Start()
+    public PlayerController(PlayerModel playerModel, PlayerView playerView)
     {
-        rb = GetComponent<Rigidbody>();
+        PlayerModel = playerModel;
+        PlayerView = GameObject.Instantiate<PlayerView>(playerView);
+        PlayerView.SetPlayerController(this);
+    }
+    public void start()
+    {
+                
     }
 
-    private void Update()
+    public void Initialize()
     {
-        SwipeCheck();
+        m_transform = PlayerView.transform;
+        rb = PlayerView.GetRigidBody();
     }
 
-    private void FixedUpdate()
+
+    internal void Run()
     {
         MoveForward();
         MoveLeft();
@@ -38,36 +42,28 @@ public class PlayerController : MonoBehaviour
         Jump();
     }
 
-    private void SwipeCheck()
+    public void SwipeCheck(Vector2 touchStartPos, Vector2 touchEndPos)
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-            m_TouchStartPos = Input.GetTouch(0).position;
+        Vector2 swipeDelta = touchEndPos - touchStartPos;
+        Vector2 inputDirection = swipeDelta.normalized;
+        Vector2 baseVector = touchEndPos.x <= touchStartPos.x ? Vector2.left : Vector2.right;
+        float relation = Vector2.Dot(baseVector, inputDirection);
+        bool isInputInY = relation <= Mathf.Cos(Mathf.Deg2Rad * m_AngleThresholdForY);
 
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
-        {
-            m_TouchEndPos = Input.GetTouch(0).position;
-            Vector2 swipeDelta = m_TouchEndPos - m_TouchStartPos;
-
-            Vector2 inputDirection = swipeDelta.normalized;
-            Vector2 baseVector = m_TouchEndPos.x <= m_TouchStartPos.x ? Vector2.left : Vector2.right;
-            float relation = Vector2.Dot(baseVector, inputDirection);
-            bool isInputInY = relation <= Mathf.Cos(Mathf.Deg2Rad * m_AngleThresholdForY);
-
-            if (isInputInY && (m_TouchEndPos.y > m_TouchStartPos.y) && rb.velocity.y == 0)
-                { m_JumpAllowed = true; }
-            if ((Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y)) && (swipeDelta.x > 0) && (rb.velocity.x == 0))
-                { m_CanMoveRight = true; }
-            if ((Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y)) && (swipeDelta.x < 0) && (rb.velocity.x == 0))
-                { m_CanMoveLeft = true; }
-        }
+        if (isInputInY && (touchEndPos.y > touchStartPos.y) && rb.velocity.y == 0)
+            { m_JumpAllowed = true; }
+        if ((Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y)) && (swipeDelta.x > 0) && (rb.velocity.x == 0))
+            { m_CanMoveRight = true; }
+        if ((Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y)) && (swipeDelta.x < 0) && (rb.velocity.x == 0))
+            { m_CanMoveLeft = true; }
     }
 
     private void MoveRight()
     {
         if(m_CanMoveRight)
         {
-            m_PositionToMoveTo = transform.position + new Vector3(moveDistance, 0, 0);
-            LerpPosition(m_PositionToMoveTo, smoothTime);
+            m_PositionToMoveTo = m_transform.position + new Vector3(PlayerModel.MoveDistance, 0, 0);
+            LerpPosition(m_PositionToMoveTo, PlayerModel.SmoothSwipeTime);
             m_CanMoveRight = false;
         }
     }
@@ -76,8 +72,8 @@ public class PlayerController : MonoBehaviour
     {
         if(m_CanMoveLeft)
         {
-            m_PositionToMoveTo = transform.position + new Vector3(-moveDistance, 0, 0);
-            LerpPosition(m_PositionToMoveTo, smoothTime);
+            m_PositionToMoveTo = m_transform.position + new Vector3(-PlayerModel.MoveDistance, 0, 0);
+            LerpPosition(m_PositionToMoveTo, PlayerModel.SmoothSwipeTime);
             m_CanMoveLeft = false;
         }
     }
@@ -86,8 +82,8 @@ public class PlayerController : MonoBehaviour
     {
         if(m_JumpAllowed)
         {
-            m_PositionToMoveTo = transform.position + new Vector3(0, moveDistance + 1.5f, 0);
-            LerpPosition(m_PositionToMoveTo, smoothTime + 0.1f);
+            m_PositionToMoveTo = m_transform.position + new Vector3(0, PlayerModel.JumpHeight, 0);
+            LerpPosition(m_PositionToMoveTo, PlayerModel.SmoothJumpTime);
             
             m_JumpAllowed = false;
         }
@@ -96,18 +92,18 @@ public class PlayerController : MonoBehaviour
     async void LerpPosition(Vector3 targetPosition, float duration)
     {
         float time = 0;
-        Vector3 startPosition = transform.position;
+        Vector3 startPosition = m_transform.position;
         while(time < duration)
         {
-            transform.position = Vector3.Lerp (startPosition, targetPosition, time/duration);
+            m_transform.position = Vector3.Lerp (startPosition, targetPosition, time/duration);
             time += Time.deltaTime;
             await Task.Yield();
         }
-        transform.position = targetPosition;
+        m_transform.position = targetPosition;
     }
 
     private void MoveForward()
     {
-        transform.Translate(Vector3.forward * moveDistance * Time.fixedDeltaTime);
+        m_transform.Translate(Vector3.forward * PlayerModel.MoveSpeed * Time.fixedDeltaTime);
     }
 }
