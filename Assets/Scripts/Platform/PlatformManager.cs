@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(20)]
 public class PlatformManager : Singleton<PlatformManager>
 {
     [SerializeField] private int numberOfPlatforms = 4;
@@ -9,31 +10,41 @@ public class PlatformManager : Singleton<PlatformManager>
     private float spawnZ = 0.0f;
     private Transform player;
 
+    GameManager gameManager;
+
     protected override void Awake()
     {
         base.Awake();
         ServiceLocator.Register(this);
+        gameManager = ServiceLocator.Get<GameManager>();
     }
 
     void Start()
     {
-        for (int i = 0; i < numberOfPlatforms; i++)
+        
+        if(gameManager.GameStarted)
         {
-            SpawnPlatform();
-        }
+            for (int i = 0; i < numberOfPlatforms; i++)
+            {
+                SpawnPlatform();
+            }
+        }   
     }
 
     void Update()
     {
-        if (player.position.z > spawnZ - (platformLength * 4))
+        if(gameManager.GameStarted)
         {
-            SpawnPlatform();
-        }
+            if (player.position.z > spawnZ - (platformLength * 4))
+            {
+                SpawnPlatform();
+            }
 
-        if (player.position.z - platformLength > activePlatforms.Peek().transform.position.z)
-        {
-            RemovePlatform();
-        }
+            if (player.position.z - platformLength > activePlatforms.Peek().transform.position.z)
+            {
+                RemovePlatform();
+            }
+        }        
     }
 
     void SpawnPlatform()

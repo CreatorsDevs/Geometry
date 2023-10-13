@@ -15,7 +15,7 @@ MonoBehaviour:
   playerType: 2
   moveSpeed: 15
   jumpHeight: 4.5
-  moveDistance: 3
-  smoothSwipeTime: 0.2
-  smoothJumpTime: 0.3
+  moveDistance: 3.5
+  smoothSwipeTime: 0.15
+  smoothJumpTime: 0.225
   playerView: {fileID: -8034358450005985558, guid: 956e9cf5a3070a04aa981c3e8e940928, type: 3}
