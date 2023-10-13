@@ -43,7 +43,7 @@ public class PlayerController
         Jump();
     }
 
-    public void SwipeCheck(Vector2 touchStartPos, Vector2 touchEndPos)
+    public bool SwipeCheck(Vector2 touchStartPos, Vector2 touchEndPos)
     {
         Vector2 swipeDelta = touchEndPos - touchStartPos;
         Vector2 inputDirection = swipeDelta.normalized;
@@ -57,6 +57,8 @@ public class PlayerController
             { m_CanMoveRight = true; }
         if ((Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y)) && (swipeDelta.x < 0) && (rb.velocity.x == 0))
             { m_CanMoveLeft = true; }
+
+        return m_JumpAllowed || m_CanMoveLeft || m_CanMoveRight;
     }
 
     private void MoveRight()

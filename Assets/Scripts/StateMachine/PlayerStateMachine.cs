@@ -6,15 +6,19 @@ using UnityEngine;
 [DefaultExecutionOrder(30)]
 public class PlayerStateMachine : Singleton<PlayerStateMachine>
 {
+    [SerializeField] private float timeToMakeBoostAvailable = 15f;
+
     public IPlayerState CurrentState { get; private set; }
     public IPlayerState NormalState { get; private set; }
     public IPlayerState BoostState { get; private set; }
-   
+    
     private PlayerService playerService;
     internal float moveSpeed;
     internal float defaultMoveSpeed;
     internal bool activateBoost = false;
 
+    private bool m_CanCountdownForBoostAvailability = false;
+    private float m_CurrTime = 0f;
     private bool m_StateInitialized = false;
 
     public void SetDefaultMoveSpeed(float defaultMoveSpeed)
@@ -38,7 +42,18 @@ public class PlayerStateMachine : Singleton<PlayerStateMachine>
 
     private void Start()
     {
-        //Debug.Log("Start function to set the normal state called within SM!");
+        ServiceLocator.Get<ObserverSystem>().OnSwipe += HandleSwipe;
+    }
+
+    private void OnDestroy()
+    {
+        ServiceLocator.Get<ObserverSystem>().OnSwipe -= HandleSwipe;
+    }
+
+    private void HandleSwipe()
+    {
+        // To make sure we only start the boost available count down after we have swiped.
+        m_CanCountdownForBoostAvailability = true;
     }
 
     private void Update()
@@ -50,11 +65,19 @@ public class PlayerStateMachine : Singleton<PlayerStateMachine>
         }
 
         CurrentState?.UpdateState();
-        //GameManager.Instance.SetPlayerModelMoveSpeed(moveSpeed);
+        
         ServiceLocator.Get<GameManager>().SetPlayerModelMoveSpeed(moveSpeed);
-        //Debug.Log("Updating the state within SM!");
-        /*Debug.Log("Default Move Speed is:" + defaultMoveSpeed);
-        Debug.Log("Move Speed is:" + moveSpeed);*/
+
+        if(m_CanCountdownForBoostAvailability && !activateBoost)
+        {
+            m_CurrTime += Time.deltaTime;
+
+            if(m_CurrTime >= timeToMakeBoostAvailable)
+            {
+                ServiceLocator.Get<ObserverSystem>().NotifyBoostAvailable();
+                m_CurrTime = 0f;
+            }
+        }
     }
 
     public void SetState(IPlayerState newState)
@@ -67,7 +90,7 @@ public class PlayerStateMachine : Singleton<PlayerStateMachine>
 
     public void ActivateBoost()
     {
-        
         activateBoost = true;
+        ServiceLocator.Get<ObserverSystem>().NotifyBoostActivated();
     }
 }
