@@ -13,7 +13,7 @@ public class PlayerController
     private Rigidbody rb;
     private Transform m_transform;
 
-    private PlayerModel PlayerModel { get; }
+    public PlayerModel PlayerModel { get; }
     public PlayerView PlayerView { get; }
 
     public PlayerController(PlayerModel playerModel, PlayerView playerView)
@@ -98,6 +98,7 @@ public class PlayerController
         {
             m_transform.position = Vector3.Lerp (startPosition, targetPosition, time/duration);
             time += Time.deltaTime;
+            Debug.Log("Time " + time / duration);
             await Task.Yield();
         }
         m_transform.position = targetPosition;

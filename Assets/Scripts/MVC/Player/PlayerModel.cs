@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerModel
 {
     public PlayerType PlayerType { get; private set; }
-    public float MoveSpeed { get; private set; }
+    public float MoveSpeed { get; set; }
     public float JumpHeight { get; private set; }
     public float MoveDistance { get; private set; }
     public float SmoothSwipeTime { get; private set; }
@@ -17,7 +17,7 @@ public class PlayerModel
         MoveSpeed = playerScriptableObject.moveSpeed;
         JumpHeight = playerScriptableObject.jumpHeight;
         MoveDistance = playerScriptableObject.moveDistance;
-        SmoothJumpTime = playerScriptableObject.smoothSwipeTime;
+        SmoothSwipeTime = playerScriptableObject.smoothSwipeTime;
         SmoothJumpTime = playerScriptableObject.smoothJumpTime;
     }
 }

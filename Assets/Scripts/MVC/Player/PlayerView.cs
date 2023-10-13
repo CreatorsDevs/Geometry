@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerView : MonoBehaviour //, IHit
+public class PlayerView : MonoBehaviour
 {
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
