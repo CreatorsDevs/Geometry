@@ -3,6 +3,35 @@
 
 An engaging game experience that keeps players entertained.
 
+## Game Visuals:
+### 1. Game Menu
+<img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/GameMenu.PNG" width = 50% height = 50%>
+
+### 2. Gameplay Initiated
+<img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/GameStarted.PNG" width = 50% height = 50%>
+
+### 3. Game On Pause
+<img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/GamePaused.PNG" width = 50% height = 50%>
+
+### 4. Boost Ready
+<img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/BoostIsAvailable.PNG" width = 50% height = 50%>
+
+### 5. Boost Engaged
+The game score gets a x2 multiplier, and the player gains immunity from hurdles.
+<img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/BoostStateActivated.PNG" width = 50% height = 50%>
+
+### 6. Hurdle Demolition during Boost
+The player destroys obstacles in their path while the boost is active.
+<img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/DestroyingTheHurdlesWhileBoostIsActivated.PNG" width = 50% height = 50%>
+
+### 7. Downfall Game Over
+The game ends due to the player falling off the platform.
+<img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/GameOverDueToFall.PNG" width = 50% height = 50%>
+
+### 8. Hurdle Collision Termination
+The game concludes due to a direct impact with an obstacle while in a standard state.
+<img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/GameOverDueToImpact.PNG" width = 50% height = 50%>
+
 ## Design Patterns Used
 
 Throughout the development of this game, several design patterns were employed to demonstrate and apply principles of good software design. The design patterns used include:
