@@ -21,11 +21,11 @@ The game score gets a x2 multiplier, and the player gains immunity from hurdles.
 <img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/BoostStateActivated.PNG" width = 50% height = 50%>
 
 ### 6. Hurdle Demolition during Boost
-The player destroys obstacles in their path while the boost is active.
+The player destroys obstacles in their path while the boost is active.                                
 <img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/DestroyingTheHurdlesWhileBoostIsActivated.PNG" width = 50% height = 50%>
 
 ### 7. Downfall Game Over
-The game ends due to the player falling off the platform.
+The game ends due to the player falling off the platform.                                       
 <img src = "https://github.com/CreatorsDevs/Geometry/blob/main/GameVisuals/GameOverDueToFall.PNG" width = 50% height = 50%>
 
 ### 8. Hurdle Collision Termination
