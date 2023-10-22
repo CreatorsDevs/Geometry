@@ -17,7 +17,10 @@ public class PlayerView : MonoBehaviour
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             touchEndPos = Input.GetTouch(0).position;
-            playerController.SwipeCheck(touchStartPos, touchEndPos);
+
+            // Notify swipe if swipe is valid and results in movement.
+            if (playerController.SwipeCheck(touchStartPos, touchEndPos))
+                ServiceLocator.Get<ObserverSystem>().NotifySwipe();
         }
 
         //playerController.Simulate(touchStartPos, touchEndPos);
