@@ -68,7 +68,7 @@ public class PlayerStateMachine : Singleton<PlayerStateMachine>
         
         ServiceLocator.Get<GameManager>().SetPlayerModelMoveSpeed(moveSpeed);
 
-        if(m_CanCountdownForBoostAvailability && !activateBoost)
+        if(m_CanCountdownForBoostAvailability && !activateBoost && !GameManager.Instance.GameEnded)
         {
             m_CurrTime += Time.deltaTime;
 

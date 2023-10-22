@@ -4,7 +4,7 @@ public class Observer : MonoBehaviour
 {
     [SerializeField] private GameObject swipeUI;
     [SerializeField] private GameObject boostUI;
-    // Start is called before the first frame update
+
     private void Start()
     {
         ServiceLocator.Get<ObserverSystem>().OnGameStart += HandleGameStart;
@@ -23,21 +23,25 @@ public class Observer : MonoBehaviour
 
     private void HandleGameStart()
     {
-        swipeUI.SetActive(true);
+        //swipeUI.SetActive(true);
+        GameManager.Instance.ActivateSwipeUI();
     }
 
     private void HandleBoostAvailable()
     {
-        boostUI.SetActive(true);
+        //boostUI.SetActive(true);
+        GameManager.Instance.ActivateBoostButtonUI();
     }
 
     private void HandleBoostActivated()
     {
-        boostUI.SetActive(false);
+        //boostUI.SetActive(false);
+        GameManager.Instance.DeactivateBoostButtonUI();
     }
 
     private void HandleSwipe()
     {
-        swipeUI.SetActive(false);
+        //swipeUI.SetActive(false);
+        GameManager.Instance.DeactivateSwipeUI();
     }
 }

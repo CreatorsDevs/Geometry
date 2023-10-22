@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerType: 2
   moveSpeed: 15
-  jumpHeight: 4.5
+  jumpHeight: 5
   moveDistance: 3.5
   smoothSwipeTime: 0.15
   smoothJumpTime: 0.225

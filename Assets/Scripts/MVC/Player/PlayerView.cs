@@ -7,14 +7,20 @@ public class PlayerView : MonoBehaviour
 {
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
+    private float fallThreshold = -50.0f;
+
+    public LayerMask playerLayer;
+    public LayerMask hurdleLayer;
+    public ParticleSystem playerParticle;
+
     private PlayerController playerController { get; set; }
 
     private void Update()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !GameManager.Instance.GamePaused)
             touchStartPos = Input.GetTouch(0).position;
 
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && !GameManager.Instance.GamePaused)
         {
             touchEndPos = Input.GetTouch(0).position;
 
@@ -24,6 +30,27 @@ public class PlayerView : MonoBehaviour
         }
 
         //playerController.Simulate(touchStartPos, touchEndPos);
+        if(transform.position.y < fallThreshold)
+        {
+            ServiceLocator.Get<GameManager>().EndGame();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (((1 << collision.gameObject.layer) & hurdleLayer) != 0)
+        {
+            if(!PlayerStateMachine.Instance.activateBoost)
+            {
+                Instantiate(playerParticle, transform.position, transform.rotation);
+                GameManager.Instance.EndGame();
+            }                
+            else if(PlayerStateMachine.Instance.activateBoost)
+            {
+                Debug.LogWarning("collided");
+                HurdleManager.Instance.RemoveHurdle(collision.gameObject);
+            }            
+        }
     }
 
     private void FixedUpdate()

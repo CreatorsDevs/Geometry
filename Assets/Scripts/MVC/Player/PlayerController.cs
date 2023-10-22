@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class PlayerController
 {
@@ -21,11 +23,6 @@ public class PlayerController
         PlayerModel = playerModel;
         PlayerView = GameObject.Instantiate<PlayerView>(playerView);
         PlayerView.SetPlayerController(this);
-    }
-
-    public void start()
-    {
-        
     }
 
     public void Initialize()
@@ -100,7 +97,7 @@ public class PlayerController
         {
             m_transform.position = Vector3.Lerp (startPosition, targetPosition, time/duration);
             time += Time.deltaTime;
-            Debug.Log("Time " + time / duration);
+            //Debug.Log("Time " + time / duration);
             await Task.Yield();
         }
         m_transform.position = targetPosition;
