@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlatformManager : Singleton<PlatformManager>
 {
     [SerializeField] private int numberOfPlatforms = 4;
-    [SerializeField] private float platformLength = 100.0f;
+    [SerializeField] private float platformLength = 100.0f;   
     private Queue<GameObject> activePlatforms = new Queue<GameObject>();
     private float spawnZ = 0.0f;
     private Transform player;
@@ -19,11 +19,11 @@ public class PlatformManager : Singleton<PlatformManager>
         gameManager = ServiceLocator.Get<GameManager>();
     }
 
-    void Start()
+    public void Start()
     {
-        
         if(gameManager.GameStarted)
         {
+            activePlatforms.Clear();
             for (int i = 0; i < numberOfPlatforms; i++)
             {
                 SpawnPlatform();
@@ -33,18 +33,18 @@ public class PlatformManager : Singleton<PlatformManager>
 
     void Update()
     {
-        if(gameManager.GameStarted)
+        if (gameManager.GameStarted && player != null)
         {
             if (player.position.z > spawnZ - (platformLength * 4))
             {
                 SpawnPlatform();
             }
 
-            if (player.position.z - platformLength > activePlatforms.Peek().transform.position.z)
+            if (activePlatforms.Count > 0 && player.position.z - platformLength > activePlatforms.Peek().transform.position.z)
             {
                 RemovePlatform();
             }
-        }        
+        }
     }
 
     void SpawnPlatform()

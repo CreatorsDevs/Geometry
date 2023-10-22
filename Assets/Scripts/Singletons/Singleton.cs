@@ -12,14 +12,19 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         if (instance != null && instance != this)
         {
             Debug.LogWarning($"Duplicate instance of {typeof(T).Name} found. Destroying the duplicate.");
-            Destroy(this);
+            Destroy(this.gameObject);
         }
-            
         else
         {
             instance = (T)this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
         }
             
+    }
+
+    protected virtual void OnDisable()
+    {
+        if (instance is AudioManager) return;
+        instance = null;
     }
 }

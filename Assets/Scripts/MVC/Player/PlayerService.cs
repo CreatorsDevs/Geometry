@@ -8,6 +8,11 @@ public class PlayerService : Singleton<PlayerService>
     [SerializeField] private PlayerScriptableObjectList playerScriptableObjectList;
     private PlayerController playerController { get; }
 
+    private PlatformManager m_PlatformManager;
+    private PlayerStateMachine m_PlayerStateMachine;
+    private CameraFollow m_Camera;
+    //private CameraFollow camera { get; }
+
     GameManager gameManager;
 
     protected override void Awake()
@@ -30,13 +35,16 @@ public class PlayerService : Singleton<PlayerService>
         PlayerModel model = new(playerObject);
         PlayerController player = new(model, playerObject.playerView);
 
-        PlatformManager platformManager = ServiceLocator.Get<PlatformManager>();
-        PlayerStateMachine playerStateMachine = ServiceLocator.Get<PlayerStateMachine>();
-        CameraFollow camera = ServiceLocator.Get<CameraFollow>();
+        if(m_PlatformManager == null)
+            m_PlatformManager = ServiceLocator.Get<PlatformManager>();
+        if(m_PlayerStateMachine == null)
+            m_PlayerStateMachine = ServiceLocator.Get<PlayerStateMachine>();
+        if(m_Camera == null)
+            m_Camera = ServiceLocator.Get<CameraFollow>();
 
-        platformManager.SetPlayerTransform(player.PlayerView.transform);
-        camera.SetPlayer(player.PlayerView.transform);
-        playerStateMachine.SetDefaultMoveSpeed(model.MoveSpeed);
+        m_PlatformManager.SetPlayerTransform(player.PlayerView.transform);
+        m_Camera.SetPlayer(player.PlayerView.transform);
+        m_PlayerStateMachine.SetDefaultMoveSpeed(model.MoveSpeed);
 
         return player;
     }

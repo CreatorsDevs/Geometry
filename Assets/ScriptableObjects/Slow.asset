@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Slow
   m_EditorClassIdentifier: 
   playerType: 1
-  moveSpeed: 10
-  jumpHeight: 3.5
+  moveSpeed: 12
+  jumpHeight: 4.5
   moveDistance: 3
   smoothSwipeTime: 0.2
-  smoothJumpTime: 0.3
+  smoothJumpTime: 0.275
   playerView: {fileID: 2488063057014978741, guid: 2f7b4665a9ea8324187546b67b2fe4f9, type: 3}

@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8778714548045217341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7793837052786328565}
+  - component: {fileID: 5982510980219605569}
+  - component: {fileID: 1620834718514159943}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7793837052786328565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778714548045217341}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5982510980219605569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778714548045217341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828811221a5c3ac4d93291f2760fbb79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMenuPanel: {fileID: 2492008606674469930, guid: 1e1734fc60142f54c81f8bc9f3b130cc, type: 3}
+  boostButton: {fileID: 3119604576735774875, guid: 1033ca47745799141b4b2216aeef7982, type: 3}
+  swipePanel: {fileID: 5221250474141472873, guid: 08d94c185ca754748944b530f017a3f7, type: 3}
+  gameOverPanel: {fileID: 5320747236363888415, guid: 62d003c6ade6e8346b44ea1dd9db13ec, type: 3}
+  pauseMenuPanel: {fileID: 2292271549746938568, guid: 7eb6abaef1350a04299e048b97bfc3f6, type: 3}
+  pauseButton: {fileID: 1142679003570822653, guid: f88c12ba3b876374fbbfca793d524dc8, type: 3}
+  boostSlider: {fileID: 5091745773776457940, guid: db22edf15c7bd97458d4cb2ea3268e8c, type: 3}
+--- !u!114 &1620834718514159943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778714548045217341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d8a1146b2df214fb34f99a79b1c826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToMakeBoostAvailable: 15

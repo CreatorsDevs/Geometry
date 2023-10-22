@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9036949526822390670}
   - component: {fileID: 6059763099014649112}
   - component: {fileID: 2488063057014978741}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SlowPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,3 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40e99e9f64db1554e85f07d40e49a830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  hurdleLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  playerParticle: {fileID: 2575562623768398044, guid: 7d16e0d7815519a468b1a951b9f89619, type: 3}
