@@ -110,6 +110,7 @@ public class GameManager : Singleton<GameManager>
 
     public void RestartGame()
     {
+        Time.timeScale = 1;
         ServiceLocator.Get<ScoreManager>().ResetScore();
         m_BuildIndex = SceneManager.GetActiveScene().buildIndex;
         GameStarted = false;
