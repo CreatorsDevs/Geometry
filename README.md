@@ -1,5 +1,4 @@
-# Cube Dash
-(Development name: Geometry)
+# (Development name: Geometry)
 
 An engaging game experience that keeps players entertained.
 
